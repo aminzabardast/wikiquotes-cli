@@ -1,0 +1,29 @@
+{
+  "name": "wikiquotes-cli",
+  "version": "0.1.0",
+  "description": "Displaying Quotes",
+  "license": "MIT",
+  "bin": {
+    "wikiquotes": "index.js"
+  },
+  "author": {
+    "name" : "Amin Zabardast",
+    "email" : "aminzabardast@gmail.com",
+    "url" : "https://AminZabardast.com"
+  },
+  "keywords": [
+    "Node.js CLI Tutorial",
+    "WikiQuotes"
+  ],
+  "main": "index.js",
+  "scripts": {},
+  "engines": {
+    "node": ">=14.15.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aminzabardast/wiki-quotes-cli.git"
+  },
+  "homepage": "https://github.com/aminzabardast/wiki-quotes-cli/tree/master/node_js",
+  "dependencies": {}
+}
