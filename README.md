@@ -1,1 +1,1 @@
-# wiki-quotes-cli
+# Wiki Quotes CLI
