@@ -7,16 +7,19 @@
     "wikiquotes": "index.js"
   },
   "author": {
-    "name" : "Amin Zabardast",
-    "email" : "aminzabardast@gmail.com",
-    "url" : "https://AminZabardast.com"
+    "name": "Amin Zabardast",
+    "email": "aminzabardast@gmail.com",
+    "url": "https://AminZabardast.com"
   },
   "keywords": [
     "Node.js CLI Tutorial",
     "WikiQuotes"
   ],
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test_random_quote": "node index.js random -a -j",
+    "test_author_quote": "node index.js author \"Bill Gates\" -a -j"
+  },
   "engines": {
     "node": ">=14.15.0"
   },
@@ -25,5 +28,7 @@
     "url": "git+https://github.com/aminzabardast/wiki-quotes-cli.git"
   },
   "homepage": "https://github.com/aminzabardast/wiki-quotes-cli/tree/master/node_js",
-  "dependencies": {}
+  "dependencies": {
+    "commander": "^8.1.0"
+  }
 }
