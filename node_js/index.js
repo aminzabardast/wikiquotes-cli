@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
 // Declaring program variable
-const { Command } = require('commander');
-const program = new Command();
+const { Command } = require('commander')
+const program = new Command()
 
 // Add Program Options and Version Information
 program
@@ -19,7 +19,7 @@ program
         console.log('--random--')
         console.log(`Command Options: ${JSON.stringify(options)}`)
         console.log(`Program Options: ${JSON.stringify(program.opts())}`)
-    });
+    })
 
 program
     .command('author <name>')
@@ -31,6 +31,6 @@ program
         console.log(`Command Options: ${JSON.stringify(options)}`)
         console.log(`Program Options: ${JSON.stringify(program.opts())}`)
     }).addHelpText('after', `\nExamples:\n  $ wikiquotes author "Bill Gates"`
-);
+)
 
 program.parse();
