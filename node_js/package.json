@@ -18,7 +18,7 @@
   "main": "index.js",
   "scripts": {
     "test_random_quote": "node index.js random -a -j",
-    "test_author_quote": "node index.js author \"Bill Gates\" -a -j"
+    "test_individual_quote": "node index.js ind \"antoine de saint exupery\" -a -j"
   },
   "engines": {
     "node": ">=14.15.0"
@@ -29,6 +29,9 @@
   },
   "homepage": "https://github.com/aminzabardast/wiki-quotes-cli/tree/master/node_js",
   "dependencies": {
-    "commander": "^8.1.0"
+    "axios": "^0.21.1",
+    "cheerio": "^1.0.0-rc.10",
+    "commander": "^8.1.0",
+    "lodash": "^4.17.21"
   }
 }
