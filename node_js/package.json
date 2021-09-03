@@ -4,7 +4,7 @@
   "description": "Displaying Quotes",
   "license": "MIT",
   "bin": {
-    "wikiquotes": "index.js"
+    "wikiquotes": "index.mjs"
   },
   "author": {
     "name": "Amin Zabardast",
@@ -15,10 +15,10 @@
     "Node.js CLI Tutorial",
     "WikiQuotes"
   ],
-  "main": "index.js",
+  "main": "index.mjs",
   "scripts": {
-    "test_random_quote": "node index.js random -a -j",
-    "test_individual_quote": "node index.js ind \"antoine de saint exupery\" -a -j"
+    "test_random_quote": "node index.mjs random -a -j",
+    "test_individual_quote": "node index.mjs ind \"antoine de saint exupery\" -a -j"
   },
   "engines": {
     "node": ">=14.15.0"

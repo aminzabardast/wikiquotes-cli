@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
-// Declaring program variable
-const axios = require('axios').default
-const { Command } = require('commander')
-const { capitalize, map, clone, join, without } = require('lodash')
-const cheerio = require('cheerio')
+import _ from 'lodash'
+const { map, join, clone, without, capitalize, isNull } = _
+import axios from 'axios'
+import cheerio from 'cheerio'
+
 
 const generateAllCases = (numberOfWords, phrase, result, counter=0, arr=[]) => {
     {
@@ -62,44 +62,20 @@ const getQuotes = async pageId => {
     })
 }
 
-const program = new Command()
+const detectIndividual = loadedContent => {
+    const regex = /{{DEFAULTSORT:(.*)}}/gis
+    const result = regex.exec(loadedContent)
+    if (isNull(result)) {
+        throw Error('No Individuals Found')
+    }
+    const name = result[1].trim()
+    return name
+}
 
-// Add Program Options and Version Information
-program
-    .version('0.1.0')
-    .option('-j, --json-output', 'Output in JSON format')
 
-// Add Commands
-program
-    .command('random')
-    .alias('rand')
-    .description('Load a random quote')
-    .option('-a, --additional-information', 'Output Additional Information')
-    .action((options) => {
-        console.log('--random--')
-        console.log(`Command Options: ${JSON.stringify(options)}`)
-        console.log(`Program Options: ${JSON.stringify(program.opts())}`)
-    })
-
-program
-    .command(' individual <name>')
-    .alias('ind')
-    .description('Load a random quote form a given individual')
-    .option('-a, --additional-information', 'Output Additional Information')
-    .action((name, options) => {
-        console.log('--individual--')
-        console.log(`name: ${name}`);
-        searchAuthor(name)
-            .then(pageIds => getQuotes(pageIds[0])
-                .then(response => {
-                    console.log('Wiki Content:')
-                    console.log(response)
-                })
-            )
-            .catch(error => console.log(error))
-        console.log(`Command Options: ${JSON.stringify(options)}`)
-        console.log(`Program Options: ${JSON.stringify(program.opts())}`)
-    }).addHelpText('after', `\nExamples:\n  $ wikiquotes ind "Bill Gates"`
-)
-
-program.parse();
+export {
+    generateAllCases,
+    searchAuthor,
+    getQuotes,
+    detectIndividual
+}
