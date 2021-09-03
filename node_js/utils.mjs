@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import _ from 'lodash'
-const { map, join, clone, without, capitalize, isNull } = _
+const { map, join, clone, without, capitalize, isNull, indexOf } = _
 import axios from 'axios'
 import cheerio from 'cheerio'
 
@@ -62,9 +62,9 @@ const getQuotes = async pageId => {
     })
 }
 
-const detectIndividual = loadedContent => {
+const detectIndividual = wikiText => {
     const regex = /{{DEFAULTSORT:(.*)}}/gis
-    const result = regex.exec(loadedContent)
+    const result = regex.exec(wikiText)
     if (isNull(result)) {
         throw Error('No Individuals Found')
     }
@@ -72,10 +72,65 @@ const detectIndividual = loadedContent => {
     return name
 }
 
+const getQuotesSection = wikiText => {
+    wikiText = removeFilesFromWikiText(wikiText)
+    wikiText = removeInternalLinksFromWikiText(wikiText)
+    wikiText = removeTypographyFromWikiText(wikiText)
+    wikiText = removeHtmlFromWikiText(wikiText)
+    const regex = /\n==([^=]+)==\n/gi
+    let titles = []
+    let title = null
+    do {
+        title = regex.exec(wikiText);
+        if (title) {
+            titles.push(replaceFilters(title[1].trim().toLowerCase()))
+        }
+    } while (title)
+    const idx = indexOf(titles, 'quotes')
+    if (idx < 0) {
+        throw Error()
+    }
+    const sections = wikiText.split(/\n==[^=]+==\n/gi)
+    console.log(sections[idx+1])
+}
+
+const replaceFilters = wikiText => {
+    const regex = /\[(?:.*)\s+(.*)]/gi
+    const matches = regex.exec(wikiText)
+    return matches ? matches[1] : wikiText
+}
+
+const removeFilesFromWikiText = wikiText => {
+    const regex = /\[\[File:[^[\]]*(?:\[\[[^[\]]*]][^[\]]*)*]]/gi
+    return wikiText.toString().replaceAll(regex, '')
+}
+
+const removeFiltersFromWikiText = wikiText => {
+
+}
+
+const removeInternalLinksFromWikiText = wikiText => {
+    wikiText = wikiText.toString().replaceAll(/\[\[[^[\]]*\|([^[\]]*)]]/gi, '$1')
+    wikiText = wikiText.toString().replaceAll(/\[\[([^[\]]*)]]/gi, '$1')
+    wikiText = wikiText.toString().replaceAll(/\[[^[\]]*\s([^[\]]*)]/gi, '$1')
+    return wikiText
+}
+
+const removeTypographyFromWikiText = wikiText => {
+    wikiText = wikiText.toString().replaceAll(/''+/gi, '')
+    return wikiText
+}
+
+const removeHtmlFromWikiText = wikiText => {
+    wikiText = wikiText.toString().replaceAll(/<(\w+)>([^<]+)<\/\1>/gi, '$2')
+    wikiText = wikiText.toString().replaceAll(/<!--[^\>]*>/gi, '')
+    return wikiText
+}
 
 export {
     generateAllCases,
     searchAuthor,
     getQuotes,
-    detectIndividual
+    detectIndividual,
+    getQuotesSection
 }

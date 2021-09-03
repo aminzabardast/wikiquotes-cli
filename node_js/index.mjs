@@ -2,7 +2,7 @@
 
 // Declaring program variable
 import { Command } from 'commander'
-import { searchAuthor, getQuotes, detectIndividual } from './utils.mjs'
+import { searchAuthor, getQuotes, detectIndividual, getQuotesSection } from './utils.mjs'
 
 const program = new Command()
 
@@ -37,6 +37,7 @@ program
                     try {
                         const name = detectIndividual(response)
                         console.log(`Quote From: ${name}`)
+                        getQuotesSection(response)
                     } catch (e) {
                         console.log(`No Individual Found!`)
                     }
