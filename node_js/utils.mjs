@@ -77,6 +77,7 @@ const getQuotesSection = wikiText => {
     wikiText = removeInternalLinksFromWikiText(wikiText)
     wikiText = removeTypographyFromWikiText(wikiText)
     wikiText = removeHtmlFromWikiText(wikiText)
+    wikiText = removeURLsFromWikiText(wikiText)
     const regex = /\n==([^=]+)==\n/gi
     let titles = []
     let title = null
@@ -101,8 +102,7 @@ const replaceFilters = wikiText => {
 }
 
 const removeFilesFromWikiText = wikiText => {
-    const regex = /\[\[File:[^[\]]*(?:\[\[[^[\]]*]][^[\]]*)*]]/gi
-    return wikiText.toString().replaceAll(regex, '')
+    return wikiText.toString().replaceAll(/\[\[File:[^[\]]*(?:\[\[[^[\]]*]][^[\]]*)*]]/gi, '')
 }
 
 const removeFiltersFromWikiText = wikiText => {
@@ -122,8 +122,14 @@ const removeTypographyFromWikiText = wikiText => {
 }
 
 const removeHtmlFromWikiText = wikiText => {
+    wikiText = wikiText.toString().replaceAll(/<ref>[^<]+<\/ref>/gi, '')
     wikiText = wikiText.toString().replaceAll(/<(\w+)>([^<]+)<\/\1>/gi, '$2')
     wikiText = wikiText.toString().replaceAll(/<!--[^\>]*>/gi, '')
+    return wikiText
+}
+
+const removeURLsFromWikiText = wikiText => {
+    wikiText = wikiText.toString().replaceAll(/\[https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&//=]*)\]/gi, '')
     return wikiText
 }
 

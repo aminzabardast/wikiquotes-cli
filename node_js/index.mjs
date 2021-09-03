@@ -34,13 +34,9 @@ program
         searchAuthor(name)
             .then(pageIds => getQuotes(pageIds[0])
                 .then(response => {
-                    try {
-                        const name = detectIndividual(response)
-                        console.log(`Quote From: ${name}`)
-                        getQuotesSection(response)
-                    } catch (e) {
-                        console.log(`No Individual Found!`)
-                    }
+                    const name = detectIndividual(response)
+                    console.log(`Quote From: ${name}`)
+                    getQuotesSection(response)
                 })
             )
             .catch(error => console.log(error))
